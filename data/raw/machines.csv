@@ -1,0 +1,6 @@
+machine_id,machine_name,machine_type,location,installation_date,status
+M001,CNC-01,CNC,Plant A,2021-03-15,Active
+M002,CNC-02,CNC,Plant A,2021-06-10,Active
+M003,Laser-01,Laser Cutter,Plant B,2022-01-12,Active
+M004,Press-01,Hydraulic Press,Plant A,2020-11-05,Maintenance
+M005,Assembly-01,Assembly Line,Plant B,2019-08-22,Active

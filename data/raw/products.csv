@@ -1,0 +1,6 @@
+product_id,product_name,category,standard_cycle_time_minutes
+P100,Widget A,Industrial Components,15
+P101,Widget B,Industrial Components,18
+P102,Gear Housing,Mechanical Parts,25
+P103,Mounting Plate,Mechanical Parts,10
+P104,Control Bracket,Electrical Components,12
