@@ -1,3 +1,7 @@
+-- ------------------------------------------------
+-- Validation raw tables
+-- ------------------------------------------------
+
 -- Checking tables load; Result - all loaded 
 SELECT COUNT(*) AS all_machines FROM raw_machines;
 SELECT COUNT(*) AS all_downtime FROM raw_downtime_events;
@@ -133,3 +137,14 @@ FROM raw_production_orders;
 -- orders: PASS (0 issues)
 -- downtime: PASS (0 issues)
 -- quality_checks: PASS (0 issues)
+
+-- ------------------------------------------------
+-- Validation clean tables
+-- ------------------------------------------------
+
+--Dimentions tables--
+
+SELECT COUNT(*) AS all_clean_categories FROM categories;
+SELECT COUNT(*) AS all_clean_dt_reasons FROM downtime_reasons;
+SELECT COUNT(*) AS all_clea_machines FROM machines;
+SELECT COUNT(*) AS all_clea_products FROM products; 
