@@ -1,144 +1,230 @@
-# 🏭 Manufacturing SQL Analytics
+# 🏭 Manufacturing SQL Analytics (End-to-End Data Engineering Project)
 
-A PostgreSQL-based data analytics project simulating a real-world manufacturing environment.  
-The goal is to model production operations, machine performance, and quality outcomes using relational database design and analytical SQL.
+## ⚙️ What This Project Demonstrates
 
----
+This project simulates a real-world manufacturing data warehouse and demonstrates a complete analytics engineering workflow:
 
-## 📌 Project Overview
+**Raw CSV Data → Staging Tables → Data Validation → Transformation Layer → Fact Tables → KPI Analytics Layer**
 
-Modern manufacturing environments suffer from fragmented data spread across machines, spreadsheets, and legacy systems.  
-This project simulates a unified operational database designed to answer key business questions such as:
-
-- Which machines are most productive?
-- Where are production bottlenecks occurring?
-- What are the main causes of downtime?
-- Which products have the highest defect rates?
-- How efficient are production lines over time?
-
-The focus is on **data modelling, SQL, and analytical thinking**, not application development.
+It is designed to showcase SQL, data modelling, ETL design, and analytical thinking using PostgreSQL.
 
 ---
 
-## 🎯 Objectives
+# 📌 Project Overview
 
-This project is designed to demonstrate:
+Modern manufacturing environments generate data across machines, production systems, and quality control processes. This data is often fragmented and inconsistent.
 
-- Relational database design (3NF principles)
-- PostgreSQL schema creation
-- Data modelling for real-world systems
-- Complex SQL querying (joins, aggregates, CTEs)
-- KPI development for operational analytics
-- Business-oriented data thinking
+This project builds a unified relational database that enables analysis of:
 
----
+* Production performance
+* Machine efficiency
+* Downtime analysis
+* Product quality
+* Operational KPIs
 
-## 🧱 Database Schema
-
-The system is built around the following entities:
-
-### Core Tables
-
-- **machines** → Manufacturing equipment information
-- **products** → Products being manufactured
-- **categories** → Product classification system
-- **production_orders** → Records of production runs
-- **downtime_events** → Machine downtime tracking
-- **downtime_reasons** → Standardised downtime classifications
-- **quality_checks** → Quality inspection results
+The focus is on **data engineering, SQL, and analytical modelling**, not application development.
 
 ---
 
-## 🔗 Data Model Relationships
+# 🎯 Objectives
 
-- A machine can have many production orders
-- A product can appear in many production orders
-- A production order can have one or many quality checks
-- A machine can generate multiple downtime events
-- Downtime events are linked to standardized reason categories
-- Products belong to defined categories
+This project demonstrates:
 
----
-
-## 🛠️ Tech Stack
-
-- PostgreSQL (database)
-- SQL (data modelling + analytics)
-- VS Code (development environment)
-- WSL (Linux subsystem for database runtime)
+* End-to-end ETL pipeline design using SQL
+* Relational database design (3NF principles)
+* Data cleaning and validation strategies
+* Fact and dimension modelling concepts
+* Complex analytical SQL (joins, CTEs, aggregations)
+* KPI design for operational reporting
+* Real-world data debugging and transformation
 
 ---
 
-## 📁 Project Structure
+# 🔄 ETL Pipeline
+
+This project implements a full SQL-based ETL workflow:
+
+## 1. Staging Layer
+
+Raw CSV files are loaded into staging tables (`raw_*`) without transformation.
+
+## 2. Data Validation Layer
+
+Data quality checks ensure reliability of downstream analytics:
+
+* Missing values detection
+* Duplicate record detection
+* Referential integrity checks
+* Business rule validation (e.g. negative values, invalid categories)
+* Data consistency checks across datasets
+
+## 3. Transformation Layer
+
+Raw data is transformed into analytics-ready dimensions:
+
+* Product categories extracted and standardised
+* Downtime reasons normalised
+* Machine and product dimension tables populated
+* Data type cleaning and formatting applied
+
+## 4. Fact Table Loading
+
+Cleaned and validated data is loaded into core operational tables:
+
+* production_orders
+* downtime_events
+* quality_checks
+
+---
+
+# 🧱 Database Schema
+
+## Core Tables
+
+* **machines** → Manufacturing equipment metadata
+* **products** → Product catalog
+* **categories** → Product classification system
+* **production_orders** → Production execution records
+* **downtime_events** → Machine downtime tracking
+* **downtime_reasons** → Standardised failure reasons
+* **quality_checks** → Inspection and defect tracking
+
+---
+
+# 🔗 Data Model Relationships
+
+* Machines generate many production orders
+* Products belong to categories
+* Production orders link machines and products
+* Production orders have quality checks
+* Machines generate downtime events
+* Downtime events reference standardised reasons
+
+---
+
+# 🛠️ Tech Stack
+
+* PostgreSQL (database engine)
+* SQL (ETL + analytics)
+* WSL (Linux environment)
+* VS Code (development)
+
+---
+
+# 📁 Project Structure
+
+```
+
 manufacturing-sql-analytics/
 │
 ├── db/
-│ └── schema.sql # Database schema (CREATE TABLE statements)
+│   └── schema.sql                  # Database schema
+│   └── stg_schema.sql              # Stage Database schema
 │
 ├── data/
-│ └── raw/ # CSV datasets (simulated production data)
+│   └── raw/                        # Raw CSV datasets
+│
+├── etl/
+│   ├── 00_reset.sql               # Reset database
+│   ├── 01_load_csv.sql            # Load raw data into staging
+│   ├── 02_transform_dimensions.sql# Build dimension tables
+│   ├── 03_load_fact_tables.sql    # Load fact tables
+│   └── validation.sql             # Data quality checks
 │
 ├── queries/
-│ ├── business_questions.sql # Basic operational queries
-│ ├── kpis.sql # Key performance indicators
-│ └── analysis.sql # Advanced analytical queries
+│   ├── 01_data_validation.sql     # Data quality checks
+│   ├── 02_business_questions.sql  # Operational analytics queries
+│   └── 03_kpis.sql                # KPI definitions
+│   
 │
 ├── docs/
-│ ├── schema_diagram.png # ER diagram
-│ └── data_dictionary.md # Table descriptions
-│
-├── notes/
-│ └── design_decisions.md # Schema design rationale
+│   └── schema_diagram.png
+│  
 │
 └── README.md
 
-## 📊 Example Business Questions
+```
 
-This database is designed to answer:
+---
 
-### Production Performance
-- Which machine produces the highest output?
-- Which products have the highest throughput?
-- How does production vary over time?
+# 📊 Business Questions Answered
 
-### Machine Efficiency
-- Which machines have the highest downtime?
-- What is the most common downtime reason?
-- What is machine utilisation rate?
+## Production Performance
 
-### Quality Control
-- Which products have the highest defect rate?
-- Which production orders fail inspection most often?
-- What percentage of output is defective?
+* Which machine produces the most units?
+* Which products are produced most frequently?
+* Which production days have highest output?
 
-## 📈 Example KPIs
+## Machine Efficiency
 
-- Machine utilisation rate
-- Production efficiency vs target
-- Downtime percentage per machine
-- Defect rate per product
-- Output per machine per day
+* Which machines have the highest downtime?
+* What are the most common downtime reasons?
+* Which machines are most/least efficient?
 
+## Quality Control
 
-## 📚 Key Learning Outcomes
+* Which products have the highest defect rates?
+* Which production orders fail inspection?
+* What is the overall defect rate?
 
-Through this project, I am developing:
+## Operational Performance
 
-- Strong understanding of relational database design
-- Ability to translate business problems into SQL queries
-- Experience with analytical thinking using structured data
-- Understanding of data normalization and schema design
-- Foundational skills for backend and data engineering roles
+* Which machines are most productive vs target?
+* What is overall production efficiency?
+* How consistent is production over time?
 
-## 🧠 Future Improvements
+---
 
-After completing the SQL version, this project can be extended into:
+# 📈 KPI Layer
 
-- Python-based ETL pipeline
-- FastAPI backend service
-- Dashboard (Power BI / React)
-- Real-time data simulation layer
+This project implements core manufacturing KPIs:
 
-## 👤 Author
+* Production efficiency (% actual vs target)
+* Machine throughput (output volume)
+* Downtime percentage (availability metric)
+* Defect rate (quality metric)
+* On-target production rate (schedule reliability)
 
-Built as part of a learning journey transitioning into backend/data engineering, with a focus on SQL, systems thinking, and real-world data modelling.
+These KPIs are calculated using SQL aggregations and reflect real-world manufacturing performance monitoring.
+
+---
+
+# 🧠 Data Engineering Skills Demonstrated
+
+* SQL-based ETL pipeline design
+* Data validation and quality assurance frameworks
+* Schema design and relational modelling
+* Fact and dimension table architecture
+* Handling real-world messy data (timestamps, duplicates, FK issues)
+* KPI design and operational analytics
+* Debugging and iterative database development
+
+---
+
+# 📚 Key Learning Outcomes
+
+Through this project, I developed:
+
+* Strong understanding of relational databases
+* Ability to build ETL pipelines using SQL only
+* Practical experience with data validation strategies
+* Analytical thinking for business KPI design
+* Confidence in debugging data engineering workflows
+
+---
+
+# 🚀 Future Improvements
+
+This project can be extended into:
+
+* Python-based ETL pipeline (Airflow or scripts)
+* FastAPI backend service
+* Power BI / Tableau dashboard
+* Real-time data ingestion simulation
+* Materialized views for performance optimisation
+
+---
+
+# 👤 Author
+
+Built as part of a learning journey into backend and data engineering, with a focus on SQL systems, analytics engineering, and real-world data modelling.
