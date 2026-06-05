@@ -59,5 +59,3 @@ CREATE TABLE IF NOT EXISTS quality_checks(
   inspection_date timestamp NOT NULL,
   result varchar NOT NULL
 );
-
-
