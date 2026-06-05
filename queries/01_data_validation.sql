@@ -161,3 +161,8 @@ SELECT COUNT(*) AS all_clean_checks FROM quality_checks;
 SELECT COUNT(*)
 FROM downtime_events
 WHERE reason_id IS NULL;
+
+SELECT ROUND(AVG(quantity_produced::INTEGER),2) AS avg_produced,
+        MIN(quantity_produced::INTEGER) AS min_produced,
+        MAX(quantity_produced::INTEGER) AS max_produced
+FROM production_orders;
