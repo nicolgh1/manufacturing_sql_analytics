@@ -148,3 +148,16 @@ SELECT COUNT(*) AS all_clean_categories FROM categories;
 SELECT COUNT(*) AS all_clean_dt_reasons FROM downtime_reasons;
 SELECT COUNT(*) AS all_clea_machines FROM machines;
 SELECT COUNT(*) AS all_clea_products FROM products; 
+
+SELECT COUNT(*)  AS prod_missing_category
+FROM products 
+WHERE category_id IS NULL;
+
+-- Facts tables ---
+SELECT COUNT(*) AS all_clean_orders FROM production_orders;
+SELECT COUNT(*) AS all_clean_dt_events FROM downtime_events;
+SELECT COUNT(*) AS all_clean_checks FROM quality_checks;
+
+SELECT COUNT(*)
+FROM downtime_events
+WHERE reason_id IS NULL;

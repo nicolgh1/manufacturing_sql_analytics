@@ -15,10 +15,10 @@ INSERT INTO machines(
     status
 )
 SELECT DISTINCT 
-    machine_id,
-    machine_name,
-    machine_type,
-    location,
+    TRIM(machine_id),
+    TRIM(machine_name),
+    TRIM(machine_type),
+    TRIM(location),
     installation_date::timestamp,
     status
 FROM raw_machines; 
@@ -30,8 +30,8 @@ INSERT INTO products (
     standard_cycle_time_minutes
 )
 SELECT DISTINCT 
-    rp.product_id,
-    rp.product_name,
+    TRIM(rp.product_id),
+    TRIM(rp.product_name),
     c.category_id,
     rp.standard_cycle_time_minutes::integer
 FROM raw_products AS rp
